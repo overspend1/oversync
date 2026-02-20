@@ -1,8 +1,8 @@
 {
   "$schema": "https://schema.tauri.app/config/2",
-  "productName": "tauri-app",
+  "productName": "oversync",
   "version": "0.1.0",
-  "identifier": "com.ubuntu.tauri-app",
+  "identifier": "com.oversync.app",
   "build": {
     "beforeDevCommand": "npm run dev",
     "devUrl": "http://localhost:1420",
@@ -12,9 +12,9 @@
   "app": {
     "windows": [
       {
-        "title": "tauri-app",
-        "width": 800,
-        "height": 600
+        "title": "Oversync",
+        "width": 1000,
+        "height": 800
       }
     ],
     "security": {
@@ -30,6 +30,23 @@
       "icons/128x128@2x.png",
       "icons/icon.icns",
       "icons/icon.ico"
-    ]
+    ],
+    "externalBin": [],
+    "copyright": "",
+    "category": "Utility",
+    "shortDescription": "",
+    "longDescription": ""
+  },
+  "plugins": {
+    "fs": {
+      "scope": ["$APP_DATA/*", "$HOME/*"]
+    },
+    "shell": {
+      "open": true
+    },
+    "dialog": {},
+    "os": {},
+    "process": {},
+    "opener": {}
   }
 }
