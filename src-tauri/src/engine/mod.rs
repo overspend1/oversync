@@ -4,6 +4,7 @@ pub mod github;
 pub mod encryption;
 pub mod storage;
 pub mod sync;
+pub mod neon;
 
 use serde::{Serialize, Deserialize};
 
