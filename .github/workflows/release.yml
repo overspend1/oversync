@@ -86,7 +86,7 @@ jobs:
       - name: Initialize Android project
         run: |
           if [ ! -d "src-tauri/gen/android" ]; then
-            npm run tauri android init -- --yes
+            yes | npx tauri android init
           fi
 
       - name: Build Android APK
