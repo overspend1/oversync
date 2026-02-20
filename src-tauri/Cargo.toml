@@ -1,0 +1,40 @@
+[package]
+name = "oversync"
+version = "0.1.0"
+description = "High-performance, P2P-first Obsidian vault sync"
+authors = ["overspend1"]
+edition = "2021"
+
+[lib]
+name = "oversync_lib"
+crate-type = ["staticlib", "cdylib", "rlib"]
+
+[build-dependencies]
+tauri-build = { version = "2", features = [] }
+
+[dependencies]
+tauri = { version = "2", features = [] }
+tauri-plugin-shell = "2"
+tauri-plugin-os = "2"
+tauri-plugin-process = "2"
+tauri-plugin-fs = "2"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+iroh = "0.18"
+notify = "6"
+tokio = { version = "1", features = ["full"] }
+anyhow = "1"
+thiserror = "1"
+chrono = { version = "0.4", features = ["serde"] }
+walkdir = "2"
+blake3 = "1"
+chacha20poly1305 = "0.10"
+octocrab = "0.38"
+base64 = "0.22"
+futures = "0.3"
+uuid = { version = "1", features = ["v4", "serde"] }
+
+[features]
+# this feature is used for production builds or when `devPath` points to the filesystem
+# DO NOT REMOVE!!
+custom-protocol = ["tauri/custom-protocol"]
