@@ -83,6 +83,12 @@ jobs:
       - name: Install frontend dependencies
         run: npm install
 
+      - name: Initialize Android project
+        run: |
+          if [ ! -d "src-tauri/gen/android" ]; then
+            npm run tauri android init
+          fi
+
       - name: Build Android APK
         run: npm run tauri android build -- --apk
         env:
