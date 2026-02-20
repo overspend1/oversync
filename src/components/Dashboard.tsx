@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Cloud, Wifi, Activity, FileCheck, Share2 } from 'lucide-react';
-import { motion } from 'framer-motion';
 import { invoke } from '@tauri-apps/api/core';
 import { PeerPairing } from './PeerPairing';
 

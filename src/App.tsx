@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { createM3Theme, defaultSeedColor } from './theme/m3';
 import { NavigationRail } from './components/NavigationRail';
 import { Dashboard } from './components/Dashboard';
