@@ -1,0 +1,14 @@
+// Minimal Android app scaffold for Tauri CI
+apply plugin: 'com.android.application'
+
+android {
+    namespace 'dev.tauri.oversync'
+    compileSdk 34
+    defaultConfig {
+        applicationId "dev.tauri.oversync"
+        minSdk 24
+        targetSdk 34
+        versionCode 1
+        versionName "0.1.1"
+    }
+}
