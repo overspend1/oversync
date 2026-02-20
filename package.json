@@ -8,7 +8,8 @@
     "build": "tsc && vite build",
     "preview": "vite preview",
     "tauri": "tauri",
-    "tauri:android": "tauri android"
+    "tauri:android": "tauri android",
+    "release": "./scripts/release.sh"
   },
   "dependencies": {
     "@material/material-color-utilities": "^0.4.0",
