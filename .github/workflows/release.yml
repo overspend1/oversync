@@ -91,6 +91,7 @@ jobs:
         env:
           NDK_HOME: ${{ steps.setup-android.outputs.ndk-path }}
           ANDROID_HOME: ${{ steps.setup-android.outputs.sdk-path }}
+          ANDROID_SDK_ROOT: ${{ steps.setup-android.outputs.sdk-path }}
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
