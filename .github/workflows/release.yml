@@ -53,6 +53,10 @@ jobs:
 
   build-android:
     runs-on: ubuntu-latest
+    env:
+      ANDROID_HOME: /usr/local/lib/android/sdk
+      ANDROID_SDK_ROOT: /usr/local/lib/android/sdk
+      NDK_HOME: /usr/local/lib/android/sdk/ndk/26.1.10909125
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -75,7 +79,6 @@ jobs:
           java-version: '17'
 
       - name: Setup Android SDK
-        id: setup-android
         uses: android-actions/setup-android@v3
 
       - name: Install Android NDK
@@ -87,14 +90,4 @@ jobs:
         run: npm install
 
       - name: Build Android APK
-        run: npm run tauri android build -- --apk
-        env:
-          NDK_HOME: ${{ steps.setup-android.outputs.ndk-path }}
-          ANDROID_HOME: ${{ steps.setup-android.outputs.sdk-path }}
-          ANDROID_SDK_ROOT: ${{ steps.setup-android.outputs.sdk-path }}
-
-      - name: Upload APK
-        uses: actions/upload-artifact@v4
-        with:
-          name: oversyc-android-apk
-          path: src-tauri/gen/android/app/build/outputs/apk/release/*.apk
+        run: npx tauri android build --apk
