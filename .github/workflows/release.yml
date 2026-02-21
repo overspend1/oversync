@@ -79,7 +79,9 @@ jobs:
         uses: android-actions/setup-android@v3
 
       - name: Install Android NDK
-        run: sdkmanager "ndk;26.1.10909125"
+        run: |
+          sdkmanager "ndk;26.1.10909125"
+          yes | sdkmanager --licenses
 
       - name: Install frontend dependencies
         run: npm install
