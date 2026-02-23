@@ -81,15 +81,13 @@ jobs:
           cmdline-tools-version: 12266719
           accept-android-sdk-licenses: true
           log-accepted-android-sdk-licenses: true
-          packages: |
-            platform-tools
-            build-tools;34.0.0
-            platforms;android-34
 
-      - name: Install Android NDK
+      - name: Install Android components
+        env:
+          ANDROID_HOME: ${{ steps.setup-android.outputs.sdk-path }}
+          ANDROID_SDK_ROOT: ${{ steps.setup-android.outputs.sdk-path }}
         run: |
-          sdkmanager "ndk;26.1.10909125"
-          yes | sdkmanager --licenses
+          yes | sdkmanager "platform-tools" "platforms;android-34" "build-tools;34.0.0" "ndk;26.1.10909125"
 
       - name: Install frontend dependencies
         run: npm install
