@@ -47,11 +47,6 @@ impl VaultIndexer {
     }
 
     pub fn remove_file(&mut self, path: &str) -> Result<[u8; 32]> {
-        // In merkle-search-tree 0.8.0, remove is not directly available on the tree
-        // We might need to handle this differently, but for now let's use what's available
-        // If it's a Map-like tree, we might just upsert a special value or use a different approach.
-        // Looking at the crate, it seems it doesn't have a simple 'remove'.
-        // For now, I'll just remove from metadata and we might need to recreate the tree or use a tombstone.
         self.metadata.remove(path);
         Ok(self.root_hash())
     }
@@ -76,5 +71,48 @@ impl VaultIndexer {
 
     pub fn get_mst(&self) -> &MerkleSearchTree<String, [u8; 32]> {
         &self.mst
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::VaultIndexer;
+
+    #[test]
+    fn root_hash_changes_on_update() {
+        let mut indexer = VaultIndexer::new();
+
+        let initial_hash = indexer.root_hash();
+        let content_a = b"hello";
+        let content_b = b"hello world";
+
+        let hash_after_a = indexer
+            .update_file("note.md".to_string(), content_a, 0)
+            .expect("update should succeed");
+
+        assert_ne!(initial_hash, hash_after_a);
+
+        let hash_after_b = indexer
+            .update_file("note.md".to_string(), content_b, 1)
+            .expect("update should succeed");
+
+        assert_ne!(hash_after_a, hash_after_b);
+    }
+
+    #[test]
+    fn metadata_tracks_updates() {
+        let mut indexer = VaultIndexer::new();
+        let content = b"sync test";
+
+        indexer
+            .update_file("daily.md".to_string(), content, 42)
+            .expect("update should succeed");
+
+        let metadata = indexer
+            .get_metadata("daily.md")
+            .expect("metadata should exist");
+
+        assert_eq!(metadata.size, content.len() as u64);
+        assert_eq!(metadata.last_modified, 42);
     }
 }

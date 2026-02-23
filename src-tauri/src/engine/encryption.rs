@@ -1,6 +1,6 @@
 use anyhow::{anyhow, Result};
 use chacha20poly1305::{
-    aead::{Aead, KeyInit, Payload},
+    aead::{Aead, KeyInit},
     XChaCha20Poly1305, XNonce,
 };
 use rand::{rngs::OsRng, RngCore};

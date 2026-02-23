@@ -23,7 +23,7 @@ async fn initialize_sync(
     let len = key_src.len().min(32);
     key_bytes[..len].copy_from_slice(&key_src[..len]);
 
-    let app_data_dir = app.path().app_data_dir().map_err(|e| e.to_string())?;
+    let app_data_dir = app.path().app_data_dir().map_err(|e: tauri::Error| e.to_string())?;
     let p2p_data_dir = app_data_dir.join("p2p_data");
 
     let engine = SyncEngine::new(
@@ -85,19 +85,17 @@ pub fn run() {
         sync_engine: RwLock::new(None),
     };
 
+    #[allow(unused_mut)]
     let mut builder = tauri::Builder::default();
 
     #[cfg(target_os = "android")]
     {
         builder = builder.setup(|app| {
-            use tauri::Manager;
             let handle = app.handle().clone();
             
             // Start foreground service on Android
             std::thread::spawn(move || {
                 let _ = handle.run_on_main_thread(move || {
-                    // This is a placeholder for actual Android foreground service initialization
-                    // In a real app, you would use a JNI call or a dedicated plugin
                     println!("Initializing Android Foreground Service for Iroh node...");
                 });
             });

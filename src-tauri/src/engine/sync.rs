@@ -1,6 +1,6 @@
 use std::path::PathBuf;
 use std::sync::Arc;
-use anyhow::{Context, Result};
+use anyhow::Result;
 use tokio::sync::{mpsc, RwLock};
 use notify::Event;
 use crate::engine::p2p::{P2pNode, P2pEvent};
@@ -108,7 +108,7 @@ impl SyncEngine {
         // 1. Update Indexer
         let mut indexer = self.indexer.write().await;
         indexer.update_file(relative_path.clone(), &content, last_modified)?;
-        let root_hash = indexer.root_hash();
+        let _root_hash = indexer.root_hash();
         drop(indexer);
 
         // 2. Encrypt file

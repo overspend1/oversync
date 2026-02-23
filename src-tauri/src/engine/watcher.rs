@@ -1,10 +1,10 @@
 use anyhow::Result;
-use notify::{Config, Event, RecursiveMode, Watcher};
+use notify::{Event, RecursiveMode, Watcher};
 use std::path::Path;
 use tokio::sync::mpsc;
 
 pub struct VaultWatcher {
-    watcher: notify::RecommendedWatcher,
+    _watcher: notify::RecommendedWatcher,
 }
 
 impl VaultWatcher {
@@ -17,6 +17,6 @@ impl VaultWatcher {
 
         watcher.watch(path, RecursiveMode::Recursive)?;
 
-        Ok(Self { watcher })
+        Ok(Self { _watcher: watcher })
     }
 }
