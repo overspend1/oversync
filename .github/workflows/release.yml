@@ -81,7 +81,10 @@ jobs:
           cmdline-tools-version: 12266719
           accept-android-sdk-licenses: true
           log-accepted-android-sdk-licenses: true
-          packages: "platform-tools;build-tools;34.0.0;platforms;android-34"
+          packages: |
+            platform-tools
+            build-tools;34.0.0
+            platforms;android-34
 
       - name: Install Android NDK
         run: |
