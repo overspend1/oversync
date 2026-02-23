@@ -53,6 +53,10 @@ jobs:
 
   build-android:
     runs-on: ubuntu-latest
+    env:
+      ANDROID_HOME: /usr/local/lib/android/sdk
+      ANDROID_SDK_ROOT: /usr/local/lib/android/sdk
+      ANDROID_NDK_HOME: /usr/local/lib/android/sdk/ndk/26.1.10909125
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -83,14 +87,8 @@ jobs:
           log-accepted-android-sdk-licenses: true
 
       - name: Install Android components
-        env:
-          ANDROID_HOME: ${{ steps.setup-android.outputs.sdk-path }}
-          ANDROID_SDK_ROOT: ${{ steps.setup-android.outputs.sdk-path }}
         run: |
-          yes | ${{ steps.setup-android.outputs.sdk-path }}/cmdline-tools/latest/bin/sdkmanager "platform-tools" "platforms;android-34" "build-tools;34.0.0" "ndk;26.1.10909125"
-          echo "ANDROID_HOME=${{ steps.setup-android.outputs.sdk-path }}" >> $GITHUB_ENV
-          echo "ANDROID_SDK_ROOT=${{ steps.setup-android.outputs.sdk-path }}" >> $GITHUB_ENV
-          echo "ANDROID_NDK_HOME=${{ steps.setup-android.outputs.sdk-path }}/ndk/26.1.10909125" >> $GITHUB_ENV
+          yes | ${ANDROID_HOME}/cmdline-tools/latest/bin/sdkmanager "platform-tools" "platforms;android-34" "build-tools;34.0.0" "ndk;26.1.10909125"
 
       - name: Install frontend dependencies
         run: npm install
