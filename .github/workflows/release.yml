@@ -97,5 +97,5 @@ jobs:
           ANDROID_SDK_ROOT: ${{ steps.setup-android.outputs.sdk-path }}
           ANDROID_NDK_HOME: ${{ steps.setup-android.outputs.sdk-path }}/ndk/26.1.10909125
         run: |
-          npx tauri android init --ci
+          yes | npx tauri android init --ci
           npx tauri android build --apk
