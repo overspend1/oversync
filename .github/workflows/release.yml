@@ -88,15 +88,14 @@ jobs:
           ANDROID_SDK_ROOT: ${{ steps.setup-android.outputs.sdk-path }}
         run: |
           yes | sdkmanager "platform-tools" "platforms;android-34" "build-tools;34.0.0" "ndk;26.1.10909125"
+          echo "ANDROID_HOME=${{ steps.setup-android.outputs.sdk-path }}" >> $GITHUB_ENV
+          echo "ANDROID_SDK_ROOT=${{ steps.setup-android.outputs.sdk-path }}" >> $GITHUB_ENV
+          echo "ANDROID_NDK_HOME=${{ steps.setup-android.outputs.sdk-path }}/ndk/26.1.10909125" >> $GITHUB_ENV
 
       - name: Install frontend dependencies
         run: npm install
 
       - name: Build Android APK
-        env:
-          ANDROID_HOME: ${{ steps.setup-android.outputs.sdk-path }}
-          ANDROID_SDK_ROOT: ${{ steps.setup-android.outputs.sdk-path }}
-          ANDROID_NDK_HOME: ${{ steps.setup-android.outputs.sdk-path }}/ndk/26.1.10909125
         run: |
           yes | npx tauri android init --ci
           npx tauri android build --apk
