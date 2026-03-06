@@ -1,0 +1,60 @@
+name: Replatform CI
+
+on:
+  push:
+    paths:
+      - "replatform/**"
+      - ".github/workflows/replatform-ci.yml"
+  pull_request:
+    paths:
+      - "replatform/**"
+
+jobs:
+  build-and-test:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "8.0.x"
+
+      - name: Restore (Cross-platform projects)
+        if: matrix.os == 'ubuntu-latest'
+        run: |
+          dotnet restore replatform/src/OverSync.Contracts/OverSync.Contracts.csproj
+          dotnet restore replatform/src/OverSync.Core/OverSync.Core.csproj
+          dotnet restore replatform/src/OverSync.Infrastructure/OverSync.Infrastructure.csproj
+          dotnet restore replatform/src/OverSync.Api/OverSync.Api.csproj
+          dotnet restore replatform/tests/OverSync.Tests/OverSync.Tests.csproj
+
+      - name: Build (Cross-platform projects)
+        if: matrix.os == 'ubuntu-latest'
+        run: |
+          dotnet build replatform/src/OverSync.Contracts/OverSync.Contracts.csproj --configuration Release --no-restore
+          dotnet build replatform/src/OverSync.Core/OverSync.Core.csproj --configuration Release --no-restore
+          dotnet build replatform/src/OverSync.Infrastructure/OverSync.Infrastructure.csproj --configuration Release --no-restore
+          dotnet build replatform/src/OverSync.Api/OverSync.Api.csproj --configuration Release --no-restore
+          dotnet build replatform/tests/OverSync.Tests/OverSync.Tests.csproj --configuration Release --no-restore
+
+      - name: Test (Cross-platform projects)
+        if: matrix.os == 'ubuntu-latest'
+        run: dotnet test replatform/tests/OverSync.Tests/OverSync.Tests.csproj --configuration Release --no-build
+
+      - name: Restore solution (Windows)
+        if: matrix.os == 'windows-latest'
+        run: dotnet restore replatform/OverSync.Replatform.sln
+
+      - name: Build solution (Windows)
+        if: matrix.os == 'windows-latest'
+        run: dotnet build replatform/OverSync.Replatform.sln --configuration Release --no-restore
+
+      - name: Test (Windows)
+        if: matrix.os == 'windows-latest'
+        run: dotnet test replatform/tests/OverSync.Tests/OverSync.Tests.csproj --configuration Release --no-build

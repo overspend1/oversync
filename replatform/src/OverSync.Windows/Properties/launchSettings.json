@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "OverSync.Windows (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "OverSync.Windows (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}

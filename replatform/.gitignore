@@ -1,0 +1,4 @@
+**/bin/
+**/obj/
+*.slnx
+OverSync.Replatform.Legacy.sln
