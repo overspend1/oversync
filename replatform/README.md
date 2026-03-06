@@ -17,17 +17,30 @@ This directory contains the WinUI 3 / .NET replatformed stack:
 dotnet build .\OverSync.Replatform.sln
 ```
 
-2. Run API (in-memory mode by default):
+2. Run API (in-memory mode by default, fixed on `http://localhost:5000`):
 
 ```powershell
-dotnet run --project .\src\OverSync.Api
+.\run-api.ps1
 ```
 
 3. Run Windows app:
 
 ```powershell
-dotnet run --project .\src\OverSync.Windows
+.\run-client.ps1
 ```
+
+Single-command dev run (starts API then client):
+
+```powershell
+.\run-dev.ps1
+```
+
+## Where Things Are
+
+- API project: `replatform\src\OverSync.Api`
+- Windows client project: `replatform\src\OverSync.Windows`
+- Shared core: `replatform\src\OverSync.Core`
+- Tests: `replatform\tests\OverSync.Tests`
 
 ## PostgreSQL + MinIO
 
